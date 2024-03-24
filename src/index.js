@@ -30,6 +30,10 @@ app.get("/home", (req, res) => {
     res.render("home");
 });
 
+app.get("/user", (req, res) => {
+    res.render("user")
+})
+
 app.post("/signup", async (req, res) => {
     const data = {
         name: req.body.email,

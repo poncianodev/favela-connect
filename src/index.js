@@ -26,6 +26,10 @@ app.get("/signup", (req, res) => {
     res.render("signup");
 });
 
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+
 app.post("/signup", async (req, res) => {
     const data = {
         name: req.body.email,

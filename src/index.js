@@ -31,8 +31,8 @@ app.get("/home", (req, res) => {
 });
 
 app.get("/user", (req, res) => {
-    res.render("user")
-})
+    res.render("user");
+});
 
 app.post("/signup", async (req, res) => {
     const data = {

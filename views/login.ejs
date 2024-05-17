@@ -1,62 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
+        <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="/login.css" />
+        <title>Login | Favela Connect</title>
+    </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-  <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="/login.css">
-  <title>Login | Favela Connect</title>
-</head>
+    <body>
+        <div class="login">
+            <img
+                src="/img/favela-login-bg.jpg"
+                alt="login image"
+                class="login__img"
+            />
 
-<body>
-  <div class="login">
-    <img src="/img/favela-login-bg.jpg" alt="login image" class="login__img">
+            <form action="/login" method="post" class="login__form">
+                <h1 class="login__title">Acesse com seu login</h1>
 
-    <form action="/login" method="post" class="login__form">
-      <h1 class="login__title">Acesse com seu login</h1>
+                <div class="login__content">
+                    <div class="login__box">
+                        <i class="ri-user-3-line login__icon"></i>
 
-      <div class="login__content">
-        <div class="login__box">
-          <i class="ri-user-3-line login__icon"></i>
+                        <div class="login__box-input">
+                            <input
+                                type="email"
+                                name="email"
+                                class="login__input"
+                                id="login-email"
+                            />
+                            <label for="login-email" class="login__label"
+                                >Email</label
+                            >
+                        </div>
+                    </div>
 
-          <div class="login__box-input">
-            <input type="email" name="email" class="login__input" id="login-email">
-            <label for="login-email" class="login__label">Email</label>
-          </div>
+                    <div class="login__box">
+                        <i class="ri-lock-2-line login__icon"></i>
+
+                        <div class="login__box-input">
+                            <input
+                                type="password"
+                                name="password"
+                                class="login__input"
+                                id="login-pass"
+                            />
+                            <label for="login-pass" class="login__label"
+                                >Senha</label
+                            >
+                            <i
+                                class="ri-eye-off-line login__eye"
+                                id="login-eye"
+                            ></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login__check">
+                    <div class="login__check-group">
+                        <input
+                            type="checkbox"
+                            class="login__check-input"
+                            id="login-check"
+                        />
+                        <label for="login-check" class="login__check-label"
+                            >Lembrar</label
+                        >
+                    </div>
+
+                    <a href="#" class="login__forgot">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="login__button">Acessar</button>
+
+                <p class="login__register">
+                    Ainda não possui uma conta?
+                    <a href="/signup">Cadastre-se</a>
+                </p>
+            </form>
         </div>
 
-        <div class="login__box">
-          <i class="ri-lock-2-line login__icon"></i>
+        <!--=============== MAIN JS ===============-->
+        <script src="login.js"></script>
+        <script src="index.ejs"></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/toastify-js"
+        ></script>
 
-          <div class="login__box-input">
-            <input type="password" name="password" class="login__input" id="login-pass">
-            <label for="login-pass" class="login__label">Senha</label>
-            <i class="ri-eye-off-line login__eye" id="login-eye"></i>
-          </div>
-        </div>
-      </div>
+        <script>
+            <% if (typeof error !== 'undefined') { %>
+                Toastify({
+                    text: "<%= error %>",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#FF0000",
+                    stopOnFocus: true
+                }).showToast();
+            <% } %>
 
-      <div class="login__check">
-        <div class="login__check-group">
-          <input type="checkbox" class="login__check-input" id="login-check">
-          <label for="login-check" class="login__check-label">Lembrar</label>
-        </div>
+            <% if (typeof success !== 'undefined') { %>
+                Toastify({
+                    text: "<%= success %>",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#4CAF50",
+                    stopOnFocus: true
+                }).showToast();
 
-        <a href="#" class="login__forgot">Esqueceu a senha?</a>
-      </div>
-
-      <button type="submit" class="login__button">Acessar</button>
-
-      <p class="login__register">
-        Ainda não possui uma conta? <a href="/signup">Cadastre-se</a>
-      </p>
-    </form>
-  </div>
-
-  <!--=============== MAIN JS ===============-->
-  <script src="login.js"></script>
-</body>
-
+                // Redirecionar para a página /home após 3 segundos
+                setTimeout(() => {
+                    window.location.href = "/home";
+                }, 3000);
+            <% } %>
+        </script>
+    </body>
 </html>

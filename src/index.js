@@ -40,11 +40,10 @@ app.post("/signup", async (req, res) => {
         password: req.body.password,
     };
 
-    // Check if the username already exists in the database
     const existingUser = await collection.findOne({ name: data.name });
 
     if (existingUser) {
-        res.send("User already exists. Please choose a different username.");
+        res.render("signup", { error: "Usuário já existente!" });
     } else {
         // Hash the password using bcrypt
         const saltRounds = 10; // Number of salt rounds for bcrypt
@@ -54,27 +53,28 @@ app.post("/signup", async (req, res) => {
 
         const userdata = await collection.insertMany(data);
         console.log(userdata);
+        res.render("signup", { success: "Usuário cadastrado com sucesso!" });
     }
 });
 
 app.post("/login", async (req, res) => {
     try {
-        const check = await collection.findOne({ name: req.body.email });
-        if (!check) {
-            res.send("O usuário não foi encontrado.");
-        }
-        // Compare the hashed password from the database with the plaintext password
-        const isPasswordMatch = await bcrypt.compare(
-            req.body.password,
-            check.password,
-        );
-        if (!isPasswordMatch) {
-            res.send("Senha incorreta!");
+        const user = await collection.findOne({ name: req.body.email });
+        if (!user) {
+            res.render("login", { error: "Usuário não encontrado!" });
         } else {
-            res.render("home");
+            const isPasswordMatch = await bcrypt.compare(
+                req.body.password,
+                user.password,
+            );
+            if (!isPasswordMatch) {
+                res.render("login", { error: "Senha incorreta!" });
+            } else {
+                res.render("login", { success: "Login bem-sucedido!" });
+            }
         }
-    } catch {
-        res.send("wrong Details");
+    } catch (err) {
+        res.render("login", { error: "Detalhes incorretos!" });
     }
 });
 
